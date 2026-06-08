@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Shield, LogOut, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { Shield, LogOut, ArrowRight, Eye, EyeOff, Download } from 'lucide-react';
 import { useAdmin } from '../context/AdminContext';
+import { collectAllData, downloadJSON, getDataSize } from '../utils/siteData';
 
 export default function Admin({ onNavigate }) {
   const { isAdmin, login, logout } = useAdmin();
@@ -9,6 +10,24 @@ export default function Admin({ onNavigate }) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [exporting, setExporting] = useState(false);
+  const [exportMsg, setExportMsg] = useState('');
+
+  const handleExport = async () => {
+    setExporting(true);
+    setExportMsg('');
+    try {
+      const data = await collectAllData();
+      const size = getDataSize(data);
+      downloadJSON(data, 'site-data.json');
+      setExportMsg(`导出成功！文件大小: ${size}`);
+      setTimeout(() => setExportMsg(''), 5000);
+    } catch (err) {
+      setExportMsg('导出失败，请重试');
+      setTimeout(() => setExportMsg(''), 3000);
+    }
+    setExporting(false);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -94,6 +113,60 @@ export default function Admin({ onNavigate }) {
         </motion.div>
 
         <div className="space-y-4">
+          {/* 数据导出 */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="bg-cyber-dark border border-yellow-500/30 rounded-xl p-6"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <h3 className="font-orbitron text-lg font-semibold text-yellow-400 mb-1">
+                  数据导出
+                </h3>
+                <p className="text-cyber-gray font-jetbrains text-xs">
+                  导出所有编辑数据（节点、项目、图片）为 JSON 文件。将文件放入 public/ 目录后提交推送，Vercel 部署即可同步数据。
+                </p>
+              </div>
+            </div>
+            {exportMsg && (
+              <p className={`font-jetbrains text-xs mb-3 ${exportMsg.startsWith('导出成功') ? 'text-green-400' : 'text-red-400'}`}>
+                {exportMsg}
+              </p>
+            )}
+            <div className="flex items-center gap-4">
+              <button
+                onClick={handleExport}
+                disabled={exporting}
+                className="flex items-center gap-2 bg-yellow-500/80 text-cyber-black font-orbitron text-sm font-bold px-5 py-2.5 rounded-lg transition-all hover:bg-yellow-500 disabled:opacity-50"
+              >
+                <Download size={16} />
+                {exporting ? '导出中...' : '导出 site-data.json'}
+              </button>
+              <span className="text-cyber-gray/60 font-jetbrains text-xs">
+                导出的文件会自动下载到本地
+              </span>
+            </div>
+          </motion.div>
+
+          {/* 部署提示 */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+            className="bg-cyber-dark border border-cyber-blue/20 rounded-xl p-5"
+          >
+            <h4 className="font-orbitron text-sm font-semibold text-cyber-blue mb-2">部署步骤</h4>
+            <ol className="text-cyber-gray font-jetbrains text-xs space-y-1.5">
+              <li>1. 点击上方按钮导出 <code className="text-cyber-blue bg-cyber-black px-1.5 py-0.5 rounded">site-data.json</code></li>
+              <li>2. 将下载的文件放入项目 <code className="text-cyber-blue bg-cyber-black px-1.5 py-0.5 rounded">public/</code> 目录（覆盖已有文件）</li>
+              <li>3. 如有视频，将视频文件放入 <code className="text-cyber-blue bg-cyber-black px-1.5 py-0.5 rounded">public/media/</code> 目录</li>
+              <li>4. <code className="text-cyber-green bg-cyber-black px-1.5 py-0.5 rounded">git add public/site-data.json public/media/</code> → commit → push</li>
+              <li>5. Vercel 自动部署，数据同步上线 🎉</li>
+            </ol>
+          </motion.div>
+
           <button
             onClick={() => onNavigate('/another-me')}
             className="w-full bg-cyber-dark border border-cyber-border rounded-xl p-6 text-left hover:border-cyber-blue transition-all group"

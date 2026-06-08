@@ -12,15 +12,29 @@ import DataStream from './components/DataStream';
 import CyberBackground from './components/CyberBackground';
 import { AdminProvider } from './context/AdminContext';
 import Admin from './pages/Admin';
+import { loadSiteData, seedFromSiteData } from './utils/siteData';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('/');
   const [isLoading, setIsLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [dataSeeded, setDataSeeded] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 3000);
     return () => clearTimeout(timer);
+  }, []);
+
+  // 启动时从 /site-data.json 加载数据（仅生产环境有效，本地 localhost 跳过）
+  useEffect(() => {
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      return;
+    }
+    loadSiteData().then((data) => {
+      if (data) {
+        seedFromSiteData(data).then(() => setDataSeeded(true));
+      }
+    });
   }, []);
 
   useEffect(() => {

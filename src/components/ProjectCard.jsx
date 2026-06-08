@@ -45,7 +45,7 @@ export default function ProjectCard({ project, onClick, compact = false }) {
   const placeholderArea = (
     <div className="absolute inset-0 flex flex-col items-center justify-center">
       {firstImage ? (
-        <img src={firstImage.data} alt={project.name} className="w-full h-full object-cover" />
+        <img src={firstImage.path || firstImage.data} alt={project.name} className="w-full h-full object-cover" />
       ) : (
         <>
           <ImageIcon size={compact ? 24 : 32} className="text-cyber-gray/60 mb-2" />

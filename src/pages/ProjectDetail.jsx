@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Code2, ExternalLink, Edit3, Save, X, Upload, Trash2, Play, Image as ImageIcon, Video } from 'lucide-react';
+import { ArrowLeft, Code2, ExternalLink, Edit3, Save, X, Upload, Trash2, Play, Image as ImageIcon, Video, Link, FolderOpen } from 'lucide-react';
 import { projects } from '../data/projects';
 import { compressImage } from '../utils/compressImage';
 import { loadProjectMedia, saveProjectMedia } from '../utils/imageStore';
@@ -156,6 +156,25 @@ export default function ProjectDetail({ projectId, onNavigate }) {
       ...prev,
       media: newMedia
     }));
+  };
+
+  const [mediaPathInput, setMediaPathInput] = useState('');
+  const [mediaPathType, setMediaPathType] = useState('image');
+
+  // 通过文件路径添加媒体（适用于 public/media/ 下的文件，可随 Git 部署）
+  const handleAddMediaByPath = () => {
+    if (!mediaPathInput.trim()) return;
+    const path = mediaPathInput.trim();
+    setEditedProject(prev => ({
+      ...prev,
+      media: [...(prev.media || []), {
+        id: Date.now() + Math.random(),
+        type: mediaPathType,
+        path,
+        name: path.split('/').pop() || path,
+      }]
+    }));
+    setMediaPathInput('');
   };
 
   const handleSave = async () => {
@@ -489,17 +508,47 @@ export default function ProjectDetail({ projectId, onNavigate }) {
               </div>
             )}
             {isEditing && (
-              <label className="flex items-center gap-1 text-cyber-blue font-jetbrains text-sm cursor-pointer hover:text-cyber-white transition-colors">
-                <Upload size={16} />
-                上传图片/视频
-                <input
-                  type="file"
-                  accept="image/*,video/*"
-                  multiple
-                  className="hidden"
-                  onChange={handleMediaUpload}
-                />
-              </label>
+              <div className="flex items-center gap-3 flex-wrap">
+                <label className="flex items-center gap-1 text-cyber-blue font-jetbrains text-sm cursor-pointer hover:text-cyber-white transition-colors">
+                  <Upload size={16} />
+                  上传
+                  <input
+                    type="file"
+                    accept="image/*,video/*"
+                    multiple
+                    className="hidden"
+                    onChange={handleMediaUpload}
+                  />
+                </label>
+                <span className="text-cyber-gray/40 font-jetbrains text-xs">或</span>
+                <div className="flex items-center gap-2">
+                  <select
+                    value={mediaPathType}
+                    onChange={(e) => setMediaPathType(e.target.value)}
+                    className="bg-cyber-black border border-cyber-border rounded px-2 py-1 text-cyber-white font-jetbrains text-xs focus:outline-none focus:border-cyber-blue"
+                  >
+                    <option value="image">图片</option>
+                    <option value="video">视频</option>
+                  </select>
+                  <input
+                    type="text"
+                    value={mediaPathInput}
+                    onChange={(e) => setMediaPathInput(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddMediaByPath(); } }}
+                    placeholder="/media/video.mp4"
+                    className="w-40 bg-cyber-black border border-cyber-border rounded px-2 py-1 text-cyber-white font-jetbrains text-xs focus:outline-none focus:border-cyber-blue"
+                  />
+                  <button
+                    onClick={handleAddMediaByPath}
+                    disabled={!mediaPathInput.trim()}
+                    className="flex items-center gap-1 text-cyber-blue font-jetbrains text-xs hover:text-cyber-white transition-colors disabled:opacity-30"
+                    title="引用 public/ 目录下的文件路径"
+                  >
+                    <Link size={14} />
+                    引用
+                  </button>
+                </div>
+              </div>
             )}
           </div>
 
@@ -509,13 +558,13 @@ export default function ProjectDetail({ projectId, onNavigate }) {
                 <div key={index} className="relative aspect-video bg-cyber-black rounded-lg overflow-hidden group">
                   {item.type === 'video' ? (
                     <video
-                      src={item.data}
+                      src={item.path || item.data}
                       controls
                       className="w-full h-full object-contain"
                     />
                   ) : (
                     <img
-                      src={item.data}
+                      src={item.path || item.data}
                       alt={item.name}
                       className="w-full h-full object-cover"
                     />
@@ -526,6 +575,9 @@ export default function ProjectDetail({ projectId, onNavigate }) {
                     ) : (
                       <ImageIcon size={14} className="text-cyber-blue" />
                     )}
+                    {item.path ? (
+                      <FolderOpen size={12} className="text-green-400" title="文件引用" />
+                    ) : null}
                     <span className="text-cyber-white font-jetbrains text-xs">
                       {item.name}
                     </span>

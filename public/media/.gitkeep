@@ -1,0 +1,4 @@
+将视频和图片文件放在这里，然后在项目编辑中使用路径引用。
+例如：/media/demo-video.mp4
+
+支持格式：.mp4, .webm, .mov, .jpg, .png, .gif, .webp
