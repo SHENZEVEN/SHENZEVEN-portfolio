@@ -1,0 +1,65 @@
+export const footprintNodes = [
+  { id: 'fp1', time: '2016.07', name: '九寨沟', category: 'footprint' },
+  { id: 'fp2', time: '2017.07', name: '上海', category: 'footprint' },
+  { id: 'fp3', time: '2018.07', name: '茶卡盐湖', category: 'footprint' },
+  { id: 'fp4', time: '2018.07', name: '青海湖', category: 'footprint' },
+  { id: 'fp5', time: '2018.07', name: '敦煌莫高窟', category: 'footprint' },
+  { id: 'fp6', time: '2021.07', name: '乐山', category: 'footprint' },
+  { id: 'fp7', time: '2023.08', name: '丽江', category: 'footprint' },
+  { id: 'fp8', time: '2023.08', name: '大理', category: 'footprint' },
+  { id: 'fp9', time: '2024.06', name: '大理', category: 'footprint' },
+  { id: 'fp10', time: '2024.06', name: '成都', category: 'footprint' },
+  { id: 'fp11', time: '2024.06', name: '乐山', category: 'footprint' },
+  { id: 'fp12', time: '2024.06', name: '丽江', category: 'footprint' },
+  { id: 'fp13', time: '2024.06', name: '大理', category: 'footprint' },
+  { id: 'fp14', time: '2024.06', name: '香格里拉', category: 'footprint' },
+  { id: 'fp15', time: '2024.10', name: '威海', category: 'footprint' },
+  { id: 'fp16', time: '2024.10', name: '泰山', category: 'footprint' },
+  { id: 'fp17', time: '2025.05', name: '天津', category: 'footprint' },
+  { id: 'fp18', time: '2025.08', name: '贵阳', category: 'footprint' },
+  { id: 'fp19', time: '2025.10', name: '烟台', category: 'footprint' },
+  { id: 'fp20', time: '2025.10', name: '大连', category: 'footprint' },
+  { id: 'fp21', time: '2026.02', name: '福州', category: 'footprint' },
+  { id: 'fp22', time: '2026.02', name: '平潭', category: 'footprint' },
+  { id: 'fp23', time: '2026.02', name: '厦门', category: 'footprint' },
+  { id: 'fp24', time: '2026.05', name: '苏州', category: 'footprint' },
+  { id: 'fp25', time: '2026.05', name: '杭州', category: 'footprint' },
+  { id: 'fp26', time: '2026.05', name: '上海', category: 'footprint' },
+];
+
+export const danceNodes = [
+  { id: 'd1', time: '2023.04', name: 'Swipe', occasion: '歌手大赛', category: 'dance' },
+  { id: 'd2', time: '2023.10', name: '社团招新路演', occasion: '-', category: 'dance' },
+  { id: 'd3', time: '2024.04', name: 'Step Back', occasion: '歌手大赛', category: 'dance' },
+  { id: 'd4', time: '2024.05', name: '校内路演', occasion: '-', category: 'dance' },
+  { id: 'd5', time: '2024.12', name: 'Magic', occasion: '大学第一次表演', category: 'dance' },
+  { id: 'd6', time: '2025.04', name: 'Daddy', occasion: '第一届舞神大赛', category: 'dance' },
+  { id: 'd7', time: '2025.09', name: 'Killin It Girl', occasion: '社团招新随舞', category: 'dance' },
+  { id: 'd8', time: '2025.09', name: 'Dirty Work', occasion: '社团招新随舞', category: 'dance' },
+  { id: 'd9', time: '2025.09', name: 'World', occasion: '社团招新随舞', category: 'dance' },
+  { id: 'd10', time: '2025.09', name: 'Beatbox', occasion: '社团招新随舞', category: 'dance' },
+  { id: 'd11', time: '2025.12', name: 'Last Festival', occasion: '元旦晚会', category: 'dance' },
+  { id: 'd12', time: '2025.12', name: '4 Walls', occasion: '元旦晚会', category: 'dance' },
+  { id: 'd13', time: '2025.12', name: 'Candy', occasion: '元旦晚会', category: 'dance' },
+  { id: 'd14', time: '2025.12', name: 'Fashion', occasion: '元旦晚会', category: 'dance' },
+  { id: 'd15', time: '2026.04', name: 'Love on the Floor & Birthday Suit', occasion: '舞神大赛', category: 'dance' },
+  { id: 'd16', time: '2026.04', name: 'Instructions团体舞', occasion: '舞神大赛', category: 'dance' },
+];
+
+export const lifeNodes = [
+  { id: 'l1', time: '2024.09', name: '入学，开始学C++', category: 'life' },
+  { id: 'l2', time: '2025.04', name: '第一次舞神大赛（团体）', category: 'life' },
+  { id: 'l3', time: '2026.05.17', name: '开始写舞房小程序', category: 'life' },
+  { id: 'l4', time: '2026.05.20', name: '小程序完成', category: 'life' },
+  { id: 'l5', time: '2026.05.22', name: '被拒，决定迁移', category: 'life' },
+  { id: 'l6', time: '2026.06.03', name: '开始写AI面试模拟器', category: 'life' },
+  { id: 'l7', time: '2026.06.06', name: 'AI模拟器完成并上线', category: 'life' },
+  { id: 'l8', time: '2026.04', name: '舞神大赛个人亚军', category: 'life' },
+];
+
+export const categoryColors = {
+  footprint: '#00d4ff',
+  dance: '#ff0040',
+  life: '#8b5cf6',
+  center: '#ffffff'
+};
