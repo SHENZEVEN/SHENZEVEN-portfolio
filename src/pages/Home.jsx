@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Code2, MousePointer2 } from 'lucide-react';
+import { ArrowRight, Code2, MousePointer2, Download } from 'lucide-react';
 import CyberPortrait from '../components/CyberPortrait';
 import ProjectCard from '../components/ProjectCard';
 import { projects } from '../data/projects';
@@ -234,6 +234,17 @@ export default function Home({ onNavigate }) {
                 <Code2 size={14} />
                 GitHub
               </motion.button>
+
+              <motion.a
+                href="/resume.pdf"
+                download
+                className="flex items-center justify-center gap-2 border border-white/30 text-cyber-white font-noto text-xs px-5 py-2.5 rounded-lg transition-all duration-300 hover:border-white/60 hover:bg-white/5"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Download size={14} />
+                下载简历
+              </motion.a>
             </div>
           </motion.div>
         </div>

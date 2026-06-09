@@ -41,14 +41,16 @@ export default function Contact() {
             </motion.a>
           </div>
 
-          <motion.button
-            className="flex items-center justify-center gap-2 bg-cyber-blue text-cyber-black font-noto text-sm font-medium px-8 py-3 rounded-lg mx-auto transition-all hover:opacity-90"
+          <motion.a
+            href="/resume.pdf"
+            download
+            className="flex items-center justify-center gap-2 bg-cyber-blue text-cyber-black font-noto text-sm font-medium px-8 py-3 rounded-lg mx-auto transition-all hover:opacity-90 inline-flex"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
             <Download size={16} />
             下载简历
-          </motion.button>
+          </motion.a>
 
         </motion.div>
       </div>

@@ -13,6 +13,7 @@ export default function ProjectDetail({ projectId, onNavigate }) {
   const [editedProject, setEditedProject] = useState(null);
   const [savedData, setSavedData] = useState(null);
   const [mediaError, setMediaError] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (project) {
@@ -33,6 +34,7 @@ export default function ProjectDetail({ projectId, onNavigate }) {
         const merged = { ...(localData || project), media };
         setEditedProject(merged);
         setSavedData({ ...merged });
+        setLoading(false);
 
         // 清理 localStorage 中的 media，只保留元数据
         if (localData?.media) {
@@ -42,6 +44,7 @@ export default function ProjectDetail({ projectId, onNavigate }) {
       }).catch(() => {
         // IndexedDB 失败，用 localStorage 兜底
         setEditedProject({ ...project, media: localData?.media || [] });
+        setLoading(false);
       });
     }
   }, [project]);
@@ -196,10 +199,21 @@ export default function ProjectDetail({ projectId, onNavigate }) {
     setIsEditing(false);
   };
 
-  if (!project || !editedProject) {
+  if (!project) {
     return (
       <div className="min-h-screen bg-cyber-black pt-16 flex items-center justify-center">
         <p className="text-cyber-gray font-noto">项目不存在</p>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-cyber-black pt-16 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-cyber-blue border-t-transparent rounded-full animate-spin" />
+          <p className="text-cyber-gray font-jetbrains text-sm">加载中...</p>
+        </div>
       </div>
     );
   }

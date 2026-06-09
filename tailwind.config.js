@@ -10,6 +10,7 @@ export default {
         'cyber-white': '#e0e0e0',
         'cyber-gray': '#6b7280',
         'cyber-blue': '#00d4ff',
+        'cyber-green': '#00ff88',
         'cyber-purple': '#8b5cf6',
         'cyber-red': '#ff0040',
         'cyber-glow': 'rgba(0, 212, 255, 0.1)',
