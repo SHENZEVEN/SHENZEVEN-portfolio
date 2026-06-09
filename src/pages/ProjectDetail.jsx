@@ -578,9 +578,6 @@ export default function ProjectDetail({ projectId, onNavigate }) {
                     {item.path ? (
                       <FolderOpen size={12} className="text-green-400" title="文件引用" />
                     ) : null}
-                    <span className="text-cyber-white font-jetbrains text-xs">
-                      {item.name}
-                    </span>
                   </div>
                   {isEditing && (
                     <button
